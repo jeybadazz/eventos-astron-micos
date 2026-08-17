@@ -1,15 +1,10 @@
 import chuvaDeMeteoros from "./data/chuvasDeMeteoros.js";
+import adicionandoAnoInicio from "./funcoes/funcoesLogicas.js";
 
-const dataAtual = new Date();
-const dataFormatada = dataAtual.toLocaleDateString("pt-BR");   //pegando a data do sistema
-const anoAtual = dataAtual.getFullYear();
+const chuvaHoje = chuvaDeMeteoros.filter(chuva => {         //funcao com as chuvas de hoje
 
-let chuvasHoje = chuvaDeMeteoros.filter(chuva => {
-    
 });
 
-let proximasChuvas = chuvaDeMeteoros(chuva => {
-    
-});
+const proximasChuvas = chuvaDeMeteoros.filter(chuva => {     //funcao com chuvas daqui 2 meses
 
-formatandoDataInicio(chuvaDeMeteoros)
+});

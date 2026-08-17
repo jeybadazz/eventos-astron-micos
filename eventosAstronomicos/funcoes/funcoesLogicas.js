@@ -1,19 +1,16 @@
 import chuvaDeMeteoros from "../data/chuvasDeMeteoros.js";
 
-function formatandoDataInicio(chuvaDeMeteoros){
-    chuvaDeMeteoros.map(chuva => {
-        const ano = anoAtual;
-        const dataInicioFormatada = ano + "/" + chuva.inicio;
-        console.log(dataInicioFormatada)
-    })
-}
+const dataAtual = new Date();                  //pegando a data atual
+const diaAtual = dataAtual.getDate();          //pegando o dia do mes
+const mesAtual = dataAtual.getMonth() + 1;     //pegando o mes 
+const anoAtual = dataAtual.getFullYear();      //pegando o ano 
+const dataFormatada = `${anoAtual}/${mesAtual}/${diaAtual}`;    //formatando a data
 
+const adicionandoAnoInicio = chuvaDeMeteoros.map(chuva => {
+    return `${anoAtual}/${chuva.inicio}`;
+}); 
 
-
-function chuvaHoje(chuvaDeMeteoros, dataFormatada){
-
-}
-
-function chuvasSeguintes(chuvaDeMeteoros, dataFormatada){
-
-}
+const chuvasHoje = chuvaDeMeteoros.filter(chuva => {
+    if(dataFormatada >= chuva.inicio && dataFormatada <= chuva.inicio) {
+    }
+});
