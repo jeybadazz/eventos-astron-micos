@@ -1,10 +1,25 @@
 import chuvaDeMeteoros from "./data/chuvasDeMeteoros.js";
-import adicionandoAnoInicio from "./funcoes/funcoesLogicas.js";
+import {chuvasDeHoje} from "./funcoes/funcoesLogicas.js";
 
-const chuvaHoje = chuvaDeMeteoros.filter(chuva => {         //funcao com as chuvas de hoje
+const dataAtual = new Date();                 //pegando data do sistema
+const DiaAtual = dataAtual.getDate();         //pegando dia do sistema
+const mesAtual = dataAtual.getMonth() + 1;    //pegando mes do sistema
+const anoAtual = dataAtual.getFullYear();     //pegando ano do sistema
 
+let dataInicioFormatada = `${anoAtual}/${mesAtual}/${DiaAtual}`;    //formatando data  aa/mm/dd
+
+    const arrayInicio = chuvaDeMeteoros.map(chuva => {
+    let novaData = `${anoAtual}/${chuva.inicio}`;  //formatando as datas de inicio do array
+    return novaData;
 });
 
-const proximasChuvas = chuvaDeMeteoros.filter(chuva => {     //funcao com chuvas daqui 2 meses
-
+    const arrayFim = chuvaDeMeteoros.map(chuva => {
+    let novaData = `${anoAtual}/${chuva.fim}`;  //formatando as datas de fim do array
+    return novaData;
 });
+
+const chuvasHoje = chuvaDeMeteoros.filter(chuva => {
+    return chuvasDeHoje(chuva)
+});
+
+console.log(chuvasHoje);
