@@ -43,4 +43,4 @@ function proximasChuvas(chuvaDeMeteoros, dataAtual, chuvaInicioFormatada, chuvaF
     });
 }
 
-export{chuvasDeHoje, proximasChuvas}
+export{chuvasDeHoje, proximasChuvas, chuvaInicioFormatada, chuvaFimFormatada}
