@@ -17,16 +17,19 @@ const chuvaFimFormatada = chuvaDeMeteoros.map(chuva => {
     return novaDataFim;              //adicionando ano na data de Fim das chuvas
 });
 
-function chuvasDeHoje(chuvaDeMeteoros, dataAtual, chuvaInicioFormatada, chuvaFimFormatada) {
+function chuvasDeHoje(chuva, dataAtual, chuvaInicioFormatada, chuvaFimFormatada) {
       let anoFim = anoAtual;
-    
-      chuvaDeMeteoros.filter(chuva => {
-        if(chuva.inicio > chuva.fim) {      //funcao que filtra as chuvas de hj
+
+        if (chuva.inicio > chuva.fim) {
             anoFim = anoAtual + 1;
-        } else if(dataAtual >= chuvaInicioFormatada && dataAtual <= chuvaFimFormatada){
+        }
+
+        if (dataAtual >= chuvaInicioFormatada && dataAtual <= chuvaFimFormatada) {
+            console.log("ver chuva hoje");
             return true;
-        } 
-    }); 
+        }
+
+            return false;
 }
 
 function proximasChuvas(chuvaDeMeteoros, dataAtual, chuvaInicioFormatada, chuvaFimFormatada){
@@ -43,4 +46,4 @@ function proximasChuvas(chuvaDeMeteoros, dataAtual, chuvaInicioFormatada, chuvaF
     });
 }
 
-export{chuvasDeHoje, proximasChuvas, chuvaInicioFormatada, chuvaFimFormatada}
+export{chuvasDeHoje, proximasChuvas, chuvaInicioFormatada, chuvaFimFormatada, dataAtual}
