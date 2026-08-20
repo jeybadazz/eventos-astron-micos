@@ -1,49 +1,32 @@
 import chuvaDeMeteoros from "../data/chuvasDeMeteoros.js";
 
-
 const dataAtual = new Date();               //pegando a data do sistema
-const anoAtual = dataAtual.getFullYear();    //pegando o ano data data atual
-const mesAtual = dataAtual.getMonth();       //pegando o mes da data atual
-const diaAtual = dataAtual.getDate();        //pegando o dia do mes da data atual
-const dataComparacao = dataAtual + 2;        //data daqui 2 meses para a funcao
 
-const chuvaInicioFormatada = chuvaDeMeteoros.map(chuva => {
-    const novaDataInicio = new Date(`${anoAtual}/${chuva.inicio}`);
-    return novaDataInicio;              //adicionando ano na data de inicio das chuvas
-});
+function chuvasDeHoje(chuva, dataAtual) {
+    const anoAtual = dataAtual.getFullYear();
+    const dataInicio = new Date(`${chuva.inicio}/${anoAtual}`);
+    const dataFim = new Date(`${chuva.fim}/${anoAtual}`);
 
-const chuvaFimFormatada = chuvaDeMeteoros.map(chuva => {
-    const novaDataFim = new Date(`${anoAtual}/${chuva.inicio}`);
-    return novaDataFim;              //adicionando ano na data de Fim das chuvas
-});
-
-function chuvasDeHoje(chuva, dataAtual, chuvaInicioFormatada, chuvaFimFormatada) {
-      let anoFim = anoAtual;
-
-        if (chuva.inicio > chuva.fim) {
-            anoFim = anoAtual + 1;
-        }
-
-        if (dataAtual >= chuvaInicioFormatada && dataAtual <= chuvaFimFormatada) {
-            console.log("ver chuva hoje");
-            return true;
-        }
-
-            return false;
+    return dataAtual >= dataInicio && dataAtual <= dataFim;
 }
 
-function proximasChuvas(chuvaDeMeteoros, dataAtual, chuvaInicioFormatada, chuvaFimFormatada){
-    chuvaDeMeteoros.filter(chuva => {
-       const mesChuva = chuva.substring(0, 1);
+    function proximasChuvas(chuva, dataAtual){ 
+        const anoAtual = dataAtual.getFullYear();          //pegando ano atual do sistema
+        const mesAtual= dataAtual.getMonth();           //pegando mes atual do sistema
 
-        if(mesAtual > mesChuva){
-            anoAtual++                   //funcao q filtra chuvasdaqui 2 meses
+         const dataInicioFormatada = new Date(`${chuva.inicio}/${anoAtual}`);    //formatando data de inicio das chuvas do array
+
+
+         const pegandoAno = dataInicioFormatada.getFullYear();              //pegando o ano da data do array
+        const pegandoMes = dataInicioFormatada.getMonth();                //pegando o mes da data  do array  
+
+        const daquiDoisMeses = dataAtual.getMonth() + 2;    //adicionando 2 meses na data
+        if(mesAtual > pegandoMes) {
+            pegandoAno + 1;
         }
 
-        else if(dataAtual < chuvaInicioFormatada && dataComparacao > chuvaInicioFormatada ){
-            true;
-        }
-    });
-}
 
-export{chuvasDeHoje, proximasChuvas, chuvaInicioFormatada, chuvaFimFormatada, dataAtual}
+        return dataAtual < dataInicioFormatada && dataInicioFormatada < daquiDoisMeses;
+   }
+
+export{chuvasDeHoje, proximasChuvas}

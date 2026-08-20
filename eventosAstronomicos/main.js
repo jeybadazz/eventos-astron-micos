@@ -1,8 +1,14 @@
 import chuvaDeMeteoros from "./data/chuvasDeMeteoros.js";
-import {chuvasDeHoje, proximasChuvas, chuvaInicioFormatada, chuvaFimFormatada, dataAtual} from "./funcoes/funcoesLogicas.js"; 
+import {chuvasDeHoje, proximasChuvas} from "./funcoes/funcoesLogicas.js"; 
+
+const dataAtual = new Date();            //pegando a data do sistema
 
 const chuvasVistasHoje = chuvaDeMeteoros.filter(chuva => {
     return chuvasDeHoje(chuva, dataAtual);
 });
 
-console.log(chuvasVistasHoje)
+const proximasASeremVistas = chuvaDeMeteoros.filter(chuva => {
+return proximasChuvas(chuva, dataAtual);
+});
+
+console.log(proximasASeremVistas)
