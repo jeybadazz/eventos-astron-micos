@@ -1,46 +1,68 @@
 import chuvaDeMeteoros from "../data/chuvasDeMeteoros.js";
 
-
 const dataAtual = new Date();               //pegando a data do sistema
-const anoAtual = dataAtual.getFullYear();    //pegando o ano data data atual
-const mesAtual = dataAtual.getMonth();       //pegando o mes da data atual
-const diaAtual = dataAtual.getDate();        //pegando o dia do mes da data atual
-const dataComparacao = dataAtual + 2;        //data daqui 2 meses para a funcao
 
-const chuvaInicioFormatada = chuvaDeMeteoros.map(chuva => {
-    const novaDataInicio = new Date(`${anoAtual}/${chuva.inicio}`);
-    return novaDataInicio;              //adicionando ano na data de inicio das chuvas
-});
+function chuvasDeHoje(chuva, dataAtual) {
+    const anoAtual = dataAtual.getFullYear();
+    const dataInicio = new Date(`${chuva.inicio}/${anoAtual}`);
+    const dataFim = new Date(`${chuva.fim}/${anoAtual}`);
+                                               //funcao que mostra as chuvas de hoje
+    if(dataFim < dataInicio){
+        if(dataAtual.getMonth() + 1 < dataFim.getMonth() + 1) {
+            dataFim.setFullYear(anoAtual - 1);
+        } else {
+            dataFim.setFullYear(anoAtual + 1);
+        }
+    }
 
-const chuvaFimFormatada = chuvaDeMeteoros.map(chuva => {
-    const novaDataFim = new Date(`${anoAtual}/${chuva.inicio}`);
-    return novaDataFim;              //adicionando ano na data de Fim das chuvas
-});
+    return dataAtual >= dataInicio && dataAtual <= dataFim;
+}
 
-function chuvasDeHoje(chuvaDeMeteoros, dataAtual, chuvaInicioFormatada, chuvaFimFormatada) {
-      let anoFim = anoAtual;
+    function proximasChuvas(chuva, dataAtual){        //funcao que mostra as proximas chuvas daqui 2 meses 
+         const anoAtual = dataAtual.getFullYear();       //pegando ano
+
+        const [mesInicio, diaInicio] = chuva.inicio.split('/');    //pegando o mes e o dia da data do array
+
+        const dataInicio = new Date(anoAtual, mesInicio - 1, diaInicio);    //transformando no tipo date
+ 
+        const daquiDoisMeses = new Date(dataAtual);      
+        daquiDoisMeses.setMonth(daquiDoisMeses.getMonth() + 2);   //colocando 2 meses na data atual para comparação 
+
+        if( dataInicio < dataAtual) {
+            dataInicio.setFullYear(anoAtual + 1)     //verifica se a data atravessa o ano, se sim, adiciona mais um ano para dar certo
+        }
+ 
+        return dataInicio <= daquiDoisMeses; 
+   }
+
+function formatarIntensidade(intensidade) {
+    if(intensidade.includes("Fraca")) {
+        return "(1)Fraca";
     
-      chuvaDeMeteoros.filter(chuva => {
-        if(chuva.inicio > chuva.fim) {      //funcao que filtra as chuvas de hj
-            anoFim = anoAtual + 1;
-        } else if(dataAtual >= chuvaInicioFormatada && dataAtual <= chuvaFimFormatada){
-            return true;
-        } 
-    }); 
+    }else if(intensidade.includes("Média")) {
+        return "(2)Media";
+
+    } else if(intensidade.includes("Forte")) {     //funcao que retorna a força da chuva
+        return "(3)Forte";
+
+    } else if(intensidade.includes("Irregular")) {
+        return "Irregular";
+
+    } else {
+        return "(1)Fraca";
+    }
 }
 
-function proximasChuvas(chuvaDeMeteoros, dataAtual, chuvaInicioFormatada, chuvaFimFormatada){
-    chuvaDeMeteoros.filter(chuva => {
-       const mesChuva = chuva.substring(0, 1);
-
-        if(mesAtual > mesChuva){
-            anoAtual++                   //funcao q filtra chuvasdaqui 2 meses
-        }
-
-        else if(dataAtual < chuvaInicioFormatada && dataComparacao > chuvaInicioFormatada ){
-            true;
-        }
-    });
+function formatarHemisferio(declinacao) {
+    if(declinacao >= 0) {
+        return Norte;                 //retornando o hemisferio da chuva
+    } else{                
+        return Sul;
+    }
 }
 
-export{chuvasDeHoje, proximasChuvas, chuvaInicioFormatada, chuvaFimFormatada}
+function  formatarPeriodo(chuva) {
+    
+}
+
+export{chuvasDeHoje, proximasChuvas, formatarIntensidade, formatarHemisferio, formatarPeriodo}
