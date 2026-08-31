@@ -1,13 +1,10 @@
-import chuvaDeMeteoros from "../data/chuvasDeMeteoros.js";
-
-const dataAtual = new Date();               //pegando a data do sistema
-
+//função que retorna as chuvas que podem ser vistas hoje
 function chuvasDeHoje(chuva, dataAtual) {
     const anoAtual = dataAtual.getFullYear();
     const dataInicio = new Date(`${chuva.inicio}/${anoAtual}`);
     const dataFim = new Date(`${chuva.fim}/${anoAtual}`);
-                                               //funcao que mostra as chuvas de hoje
-    if(dataFim < dataInicio){
+                            
+    if(dataFim < dataInicio){       //se o mes atual for menor que o mes do fim do array, adiciona mais um ano pra nao dar errado
         if(dataAtual.getMonth() + 1 < dataFim.getMonth() + 1) {
             dataFim.setFullYear(anoAtual - 1);
         } else {
@@ -18,8 +15,9 @@ function chuvasDeHoje(chuva, dataAtual) {
     return dataAtual >= dataInicio && dataAtual <= dataFim;
 }
 
-    function proximasChuvas(chuva, dataAtual){        //funcao que mostra as proximas chuvas daqui 2 meses 
-         const anoAtual = dataAtual.getFullYear();       //pegando ano
+    //funcao que retorna as chuvas que pedem ser vistas daqui 2 meses
+    function proximasChuvas(chuva, dataAtual){
+         const anoAtual = dataAtual.getFullYear();
 
         const [mesInicio, diaInicio] = chuva.inicio.split('/');    //pegando o mes e o dia da data do array
 
@@ -55,9 +53,9 @@ function formatarIntensidade(intensidade) {
 
 function formatarHemisferio(declinacao) {
     if(declinacao >= 0) {
-        return Norte;                 //retornando o hemisferio da chuva
+        return "Norte";                 //retornando o hemisferio da chuva
     } else{                
-        return Sul;
+        return "Sul";
     }
 }
 
@@ -67,4 +65,4 @@ function  inverterData(chuva) {
     return `${dia}/${mes}`;
 }
 
-export{chuvasDeHoje, proximasChuvas, formatarIntensidade, formatarHemisferio, formatarPeriodo}
+export{chuvasDeHoje, proximasChuvas, formatarIntensidade, formatarHemisferio, inverterData}
